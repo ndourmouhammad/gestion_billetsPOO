@@ -57,7 +57,8 @@ class Billet implements Ibillet
     }
 
 
-    public function create($date_heure_reservation, $statut, $id_client, $id__trajet){
+    public function create($date_heure_reservation, $statut, $id_client, $id__trajet)
+    {
         try {
             $sql = "INSERT INTO billets (date_heure_reservation, statut, id_client, id__trajet) VALUES (:date_heure_reservation, :statut, :id_client, :id__trajet)";
             $req = $this->connection->prepare($sql);
@@ -108,26 +109,29 @@ class Billet implements Ibillet
     }
 
     public function update($id, $date_heure_reservation, $statut, $id_client, $id__trajet)
-{
-    try {
-        $sql = "UPDATE billets SET date_heure_reservation = :date_heure_reservation , statut = :statut , id_client = :id_client, id__trajet = :id__trajet WHERE id = :id";
-        $req = $this->connection->prepare($sql);
-        $req->bindValue(':id', $id, PDO::PARAM_INT);
-        $req->bindValue(':date_heure_reservation', $date_heure_reservation);
-        $req->bindValue(':statut', $statut);
-        $req->bindValue(':id_client', $id_client, PDO::PARAM_INT);
-        $req->bindValue(':id__trajet', $id__trajet, PDO::PARAM_INT);
-        $req->execute();
-
-        header("location: index.php");
-        exit();
-    } catch (PDOException $erreur) {
-        die("Erreur !: " . $erreur->getMessage() . "<br/>");
-    }   
-}
+    {
+        try {
+            $sql = "UPDATE billets SET date_heure_reservation = :date_heure_reservation , statut = :statut , id_client = :id_client, id__trajet = :id__trajet WHERE id = :id";
+            $req = $this->connection->prepare($sql);
+            $req->bindValue(':id', $id, PDO::PARAM_INT);
+            $req->bindValue(':date_heure_reservation', $date_heure_reservation);
+            $req->bindValue(':statut', $statut);
+            $req->bindValue(':id_client', $id_client, PDO::PARAM_INT);
+            $req->bindValue(':id__trajet', $id__trajet, PDO::PARAM_INT);
+            $req->execute();
+            
+            // Redirection après la mise à jour
+            header("location: index.php");
+            exit();
+    
+          
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
+    }
+    
 
     public function delete()
     {
-        
     }
 }

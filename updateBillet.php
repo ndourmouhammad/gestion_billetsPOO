@@ -8,23 +8,22 @@ $clients = $client->read();
 $trajets = $trajets->getTrajet();
 
 // Vérification de l'existence de l'identifiant du billet dans la requête GET
-if (isset($_GET['id'])) {
+
     $id = $_GET['id'];
 
     // Vérification de la méthode de requête HTTP
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Récupération des valeurs soumises par le formulaire
-        $date_heure_reservation = htmlspecialchars($_POST['date']);
+        $date_heure_reservation = htmlspecialchars($_POST['date_heure_reservation']);
         $statut = htmlspecialchars($_POST['statut']);
         $id_client = htmlspecialchars($_POST['id_client']);
         $id__trajet = htmlspecialchars($_POST['id__trajet']);
 
         // Vérification que toutes les données sont fournies
-        if (!empty($date_heure_reservation) && !empty($statut) && !empty($id_client) && !empty($id_trajet)) {
-            // Mise à jour du billet dans la base de données
-            $addBillet = $billet->update($id, $date_heure_reservation, $statut, $id_client, $id_trajet);
-            
-        }
+       
+            $updateBillet = $billet->update($id, $date_heure_reservation, $statut, $id_client, $id__trajet);
+              
+        
     }
 
     // Sélection du billet à modifier dans la base de données
@@ -35,7 +34,7 @@ if (isset($_GET['id'])) {
 
     // Récupération des données du billet
     $billets = $req->fetch(PDO::FETCH_ASSOC);
-}
+
 ?>
 
 <?php require('header.php') ?>
@@ -45,11 +44,11 @@ if (isset($_GET['id'])) {
 </div>
 <div class="container">
     <h2>Modifier un billet</h2>
-    <form method="post" class="reservation-form" >
+    <form method="post" action="" class="reservation-form">
         <div class="form-row">
             <div class="form-group">
-                <label for="date">Date de réservation :</label>
-                <input type="datetime-local" id="date" name="date" value="<?php echo $billets['date_heure_reservation']; ?>" required>
+                <label for="date_heure_reservation">Date de réservation :</label>
+                <input type="datetime-local" id="date_heure_reservation" name="date_heure_reservation" value="<?php echo $billets['date_heure_reservation']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="statut">Statut :</label>
@@ -63,8 +62,8 @@ if (isset($_GET['id'])) {
 
         <div class="form-row">
             <div class="form-group">
-                <label for="id_trajet">Le trajet :</label>
-                <select type='text' name="id__trajet" id="id_trajet" required>
+                <label for="id__trajet">Le trajet :</label>
+                <select type='text' name="id__trajet" id="id__trajet" required>
                     <option value="<?php echo $billets['id']; ?>"><?php echo $billets['trajet']; ?> (<?php echo $billets['prix']; ?> CFA)</option>
                     <?php foreach ($trajets as $trajet) : ?>
                         <option value="<?php echo $trajet->id; ?>"><?php echo $trajet->trajet; ?> (<?php echo $trajet->prix; ?> CFA) </option>
@@ -83,7 +82,7 @@ if (isset($_GET['id'])) {
         </div>
 
         <div class="form-row">
-            <button type="submit">Réserver</button>
+            <button type="submit">Mettre à jour</button>
         </div>
     </form>
 </div>
