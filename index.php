@@ -23,8 +23,8 @@ $billets  = $billet->read();
                     <td><?= $billet->prenom ?> <?= $billet->nom ?></td>
                     <td><?= $billet->telephone ?></td>
                     <td>
-                        <a href="update.php?id=<?= $billet->id ?>" class="btn btn-info">Modifier</a>
-                        <a onclick="return confirm('Confirmer la suppression')" href="delete.php?id=<?= $billet->id ?>" class="btn btn-danger">Supprimer</a>
+                        <a href="updateBillet.php?id=<?= $billet->id ?>" class="btn btn-info">Modifier</a>
+                        <a onclick="return confirm('Confirmer la suppression')" href="deleteBillet.php?id=<?= $billet->id ?>" class="btn btn-danger">Supprimer</a>
                         <a href="detail.php?id=<?= $billet->id ?>" class="btn btn-info">Voir les détails</a>
                     </td>
                 </tr>
