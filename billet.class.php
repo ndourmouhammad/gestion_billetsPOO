@@ -121,8 +121,8 @@ class Billet implements Ibillet
             $req->execute();
             
             // Redirection après la mise à jour
-            header("location: index.php");
-            exit();
+              header("location: index.php");
+              exit();
     
           
         } catch (PDOException $erreur) {
@@ -131,7 +131,20 @@ class Billet implements Ibillet
     }
     
 
-    public function delete()
+    public function delete($id)
     {
+        try {
+            $sql= "DELETE FROM  billets WHERE id =:id ";
+            $req = $this->connection->prepare($sql);
+            $req->bindValue(':id', $id, PDO::PARAM_INT);
+            $req->execute();
+            
+            header("location: index.php");
+            exit();
+    
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
     }
 }
+
