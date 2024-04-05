@@ -12,6 +12,6 @@ interface Ibillet
 {
     public function create($date_heure_reservation, $statut, $id_client, $id__trajet);
     public function read();
-    public function update();
+    public function update($id, $date_heure_reservation, $statut, $id_client, $id__trajet);
     public function delete();
 }

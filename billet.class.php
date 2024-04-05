@@ -107,9 +107,22 @@ class Billet implements Ibillet
         }
     }
 
-    public function update()
+    public function update($id, $date_heure_reservation, $statut, $id_client, $id__trajet)
     {
-        
+     try {
+        $sql = "update billets set date_heure_reservation = :date_heure_reservation, statut = :statut, id_client = :id_client, id__trajet = :id_trajet WHERE id = :id";
+        $req = $this->connection->prepare($sql);
+        $req->bindValue(':id', $id, PDO::PARAM_INT);
+        $req->bindValue(':date_heure_reservation', $date_heure_reservation);
+        $req->bindValue(':statut', $statut);
+        $req->bindValue(':id_client', $id_client, PDO::PARAM_INT);
+        $req->bindValue(':id_trajet', $id__trajet, PDO::PARAM_INT);
+        $req->execute();
+        header("location: index.php");
+        exit();
+     } catch (PDOException $erreur) {
+        die("Erreur !: " . $erreur->getMessage() . "<br/>");
+     }   
     }
 
     public function delete()
