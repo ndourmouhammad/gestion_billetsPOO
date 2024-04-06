@@ -1,6 +1,8 @@
 <?php
 require_once("config.php");
 
+$id = $_GET['id'];
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les valeurs soumises par le formulaire
     $nom = htmlspecialchars($_POST['nom']);
@@ -11,9 +13,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     if ($nom != "" && $prenom != "" && $email != "" && $adresse != "" && $telephone != "") {
-        $addclient = $client->create($nom, $prenom, $email, $adresse, $telephone);
+        $addclient = $client->update($id, $nom, $prenom, $email, $adresse, $telephone);
     }
 }
+
+try {
+    $sql = 'SELECT * FROM clients WHERE id = :id';
+
+    $statement = $connection->prepare($sql);
+    $statement->bindValue("id", $id, PDO::PARAM_INT);
+    $statement->execute();
+    $clients = $statement->fetch(PDO::FETCH_OBJ);
+    
+} catch (PDOException $erreur) {
+    die("Erreur !: " . $erreur->getMessage() . "<br/>");
+}
+
 ?>
 
 <?php require('header.php') ?>
@@ -22,16 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h1>Nous vous remercions de votre intérêt pour notre plateforme de réservation.</h1>
 </div>
 <div class="container">
-    <h2>Ajouter un client</h2>
+    <h2>Modifier les informations d'un client</h2>
     <form method="post" class="reservation-form">
     <div class="form-row">
         <div class="form-group">
             <label for="nom">Nom du client :</label>
-            <input type="text" id="nom" name="nom" required>
+            <input type="text" id="nom" name="nom" value="<?= $clients->nom; ?>" required>
         </div>
         <div class="form-group">
             <label for="prenom">Prénom du client :</label>
-            <input type="text" id="prenom" name="prenom"required>
+            <input type="text" id="prenom" name="prenom" value="<?= $clients->prenom; ?>"  required>
         </div>
     </div>
    
@@ -39,23 +54,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="form-row">
         <div class="form-group">
             <label for="adresse">Adresse postale :</label>
-            <input type="text" id="adresse" name="adresse" required>
+            <input type="text" id="adresse" name="adresse" value="<?= $clients->adresse; ?>"  required>
         </div>
         <div class="form-group">
             <label for="telephone">Numéro téléphone :</label>
-            <input type="tel" id="telephone" name="telephone" required>
+            <input type="tel" id="telephone" name="telephone" value="<?= $clients->telephone; ?>"  required>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group">
             <label for="email">Adresse email :</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" value="<?= $clients->email; ?>"  required>
         </div>
     </div>
     
    
     <div class="form-row">
-        <button type="submit">Ajouter un client</button>
+        <button type="submit">Valider les modifications</button>
     </div>
 </form>
 

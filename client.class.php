@@ -94,7 +94,22 @@ class Client implements IClient
 
     public function update($id, $nom, $prenom, $email, $adresse, $telephone)
     {
-        
+        try {
+            $sql = 'UPDATE clients SET nom = :nom, prenom = :prenom, email = :email, adresse = :adresse, telephone = :telephone WHERE id = :id';
+            $req = $this->connection->prepare($sql);
+            $req->bindValue(":id", $id, PDO::PARAM_INT);
+            $req->bindValue("nom", $nom);
+            $req->bindValue("prenom", $prenom);
+            $req->bindValue("email", $email);
+            $req->bindValue("adresse", $adresse);
+            $req->bindValue("telephone", $telephone, PDO::PARAM_INT);
+            $req->execute();
+
+            header("location: clientele.php");
+            exit();
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
     }
 
     public function delete($id)

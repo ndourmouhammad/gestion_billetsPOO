@@ -30,8 +30,8 @@ $clients  = $client->read();
                     <td><?= $client->email ?></td>
                     <td><?= $client->adresse ?></td>
                     <td>
-                        <a href="update.php?id=<?= $client->id ?>" class="btn btn-info">Modifier</a>
-                        <a onclick="return confirm('Confirmer la suppression')" href="delete.php?id=<?= $client->id ?>" class="btn btn-danger">Supprimer</a>
+                        <a href="updateClient.php?id=<?= $client->id ?>" class="btn btn-info">Modifier</a>
+                        <a onclick="return confirm('Confirmer la suppression')" href="deleteClient.php?id=<?= $client->id ?>" class="btn btn-danger">Supprimer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
