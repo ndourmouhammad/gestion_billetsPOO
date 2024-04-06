@@ -10,9 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telephone = htmlspecialchars($_POST['telephone']);
     
 
-    if ($nom != "" && $prenom != "" && $email != "" && $adresse != "" && $telephone != "") {
+    if ($client->validerChaine($nom) && $client->validerChaine($prenom) && $client->validerEmail($email)) {
         $addclient = $client->create($nom, $prenom, $email, $adresse, $telephone);
+    } else {
+        echo 'Données invalides. Veuillez vérifier à nouveau avant de soumettre';
     }
+
 }
 ?>
 

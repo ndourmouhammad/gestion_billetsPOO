@@ -1,9 +1,12 @@
 <?php
 
 require_once('crud.interface.php');
+require_once('validation.trait.php');
 
 class Billet implements Ibillet
 {
+    use Validation;
+
     private $connection;
     private $date_heure_reservation;
     private $statut;

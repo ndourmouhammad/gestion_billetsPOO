@@ -1,9 +1,12 @@
 <?php
 require_once("crud.interface.php");
+require_once('validation.trait.php');
 
 // classe client
 class Client implements IClient
 {
+    use Validation;
+    
     private $connection;
     private $nom;
     private $prenom;
