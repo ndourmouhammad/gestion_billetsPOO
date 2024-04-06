@@ -89,7 +89,6 @@ class Client implements IClient
         } catch (PDOException $erreur) {
             die("Erreur !: " . $erreur->getMessage() . "<br/>");
         }
-        
     }
 
     public function update($id, $nom, $prenom, $email, $adresse, $telephone)
@@ -114,7 +113,17 @@ class Client implements IClient
 
     public function delete($id)
     {
-        
+        try {
+            $sql = 'DELETE FROM clients WHERE id = :id';
+            $req = $this->connection->prepare($sql);
+            $req->bindValue(':id', $id, PDO::PARAM_INT);
+            $req->execute();
+
+            header("location: clientele.php");
+            exit();
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
     }
 
 
@@ -131,6 +140,4 @@ class Client implements IClient
             die("Erreur !: " . $erreur->getMessage() . "<br/>");
         }
     }
-
-   
 }
