@@ -25,6 +25,7 @@ trait Validation
     {
         if (!empty($telephone)) {
             $regex = '';
+            return filter_var($telephone, FILTER_VALIDATE_INT);
         }
     }
 }
