@@ -17,6 +17,7 @@ try {
     $statut = '';
     $id_client = 0;
     $id__trajet = 0;
+    
     $billet = new Billet($connection, $date, $statut, $id_client, $id__trajet);
 
 
